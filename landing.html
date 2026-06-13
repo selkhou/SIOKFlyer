@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <title>StuDiscount — Bientôt disponible</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+    html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#F0F4FF;}
+
+    .page{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:env(safe-area-inset-top,20px) 24px 40px;}
+
+    /* Logo */
+    .logo{display:flex;align-items:baseline;gap:2px;margin-top:40px;margin-bottom:8px;}
+    .logo-stu{font-family:'Arial Black',Arial,sans-serif;font-weight:900;font-size:48px;color:#0066FF;letter-spacing:-2px;line-height:1;}
+    .logo-discount{font-family:'Arial Black',Arial,sans-serif;font-weight:900;font-size:48px;color:#F59E0B;letter-spacing:-2px;line-height:1;}
+
+    /* Badge lancement */
+    .badge{background:#0066FF;color:white;font-size:13px;font-weight:700;padding:6px 16px;border-radius:50px;margin-bottom:28px;}
+
+    /* Accroche */
+    .tagline{font-size:20px;font-weight:800;color:#1A1A2E;text-align:center;line-height:1.35;margin-bottom:10px;max-width:320px;}
+    .tagline span{color:#F59E0B;}
+    .sublabel{font-size:14px;color:#6B7280;text-align:center;line-height:1.6;margin-bottom:32px;max-width:300px;}
+
+    /* Carte question */
+    .card{background:white;border-radius:24px;padding:28px 24px;width:100%;max-width:400px;box-shadow:0 8px 32px rgba(0,0,0,0.1);}
+    .card-title{font-size:16px;font-weight:800;color:#1A1A2E;text-align:center;margin-bottom:20px;}
+
+    /* Boutons réponse */
+    .btn-yes{width:100%;padding:16px;border-radius:14px;border:none;background:linear-gradient(135deg,#0066FF,#3399FF);color:white;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;margin-bottom:10px;box-shadow:0 4px 16px rgba(0,102,255,0.3);transition:transform 0.1s;}
+    .btn-yes:active{transform:scale(0.97);}
+    .btn-no{width:100%;padding:14px;border-radius:14px;border:1.5px solid #E5E7EB;background:transparent;color:#9CA3AF;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.1s;}
+    .btn-no:active{background:#F9FAFB;}
+
+    /* Formulaire */
+    .form{display:none;margin-top:4px;}
+    .form.visible{display:block;}
+    .form-title{font-size:15px;font-weight:700;color:#1A1A2E;margin-bottom:16px;text-align:center;}
+    .input{width:100%;padding:14px 16px;border-radius:12px;border:1.5px solid #E5E7EB;font-size:15px;font-family:inherit;outline:none;color:#1A1A2E;margin-bottom:10px;background:#FAFAFA;transition:border-color 0.2s;}
+    .input:focus{border-color:#0066FF;background:white;}
+    .btn-submit{width:100%;padding:16px;border-radius:14px;border:none;background:linear-gradient(135deg,#0066FF,#3399FF);color:white;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 4px 16px rgba(0,102,255,0.3);transition:transform 0.1s;}
+    .btn-submit:active{transform:scale(0.97);}
+    .btn-submit:disabled{background:#D1D5DB;box-shadow:none;cursor:default;}
+    .error{color:#EF4444;font-size:12px;margin-bottom:8px;text-align:center;display:none;}
+    .error.visible{display:block;}
+
+    /* Succès */
+    .success{display:none;text-align:center;padding:8px 0;}
+    .success.visible{display:block;}
+    .success-icon{font-size:56px;margin-bottom:12px;}
+    .success-title{font-size:20px;font-weight:900;color:#1A1A2E;margin-bottom:8px;}
+    .success-pts{display:inline-block;background:linear-gradient(135deg,#F59E0B,#FBBF24);color:white;font-size:16px;font-weight:900;padding:8px 20px;border-radius:50px;margin-bottom:12px;}
+    .success-sub{font-size:13px;color:#6B7280;line-height:1.6;}
+
+    /* Merci non */
+    .thankyou{display:none;text-align:center;padding:8px 0;}
+    .thankyou.visible{display:block;}
+    .thankyou-icon{font-size:48px;margin-bottom:12px;}
+    .thankyou-text{font-size:15px;color:#6B7280;line-height:1.6;}
+
+    /* Footer */
+    .footer{margin-top:24px;font-size:11px;color:#C0C0C0;text-align:center;}
+
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+    .card{animation:fadeIn 0.4s ease;}
+  </style>
+</head>
+<body>
+<div class="page">
+  <!-- Logo -->
+  <div class="logo">
+    <span class="logo-stu">Stu</span>
+    <span class="logo-discount">Discount</span>
+  </div>
+
+  <!-- Badge -->
+  <div class="badge">🚀 Disponible le 1er juillet 2026</div>
+
+  <!-- Accroche -->
+  <div class="tagline">L'appli qui regroupe <span>toutes les promos étudiants</span> dans ta ville</div>
+  <div class="sublabel">StuDiscount te fait économiser toujours plus — inscris-toi avant le lancement et gagne 50 points de bienvenue !</div>
+
+  <!-- Carte -->
+  <div class="card">
+    <!-- Question -->
+    <div id="question">
+      <div class="card-title">Tu es étudiant·e ?<br>Cette appli t'intéresse ?</div>
+      <button class="btn-yes" onclick="showForm()">✅ Oui, je veux en profiter !</button>
+      <button class="btn-no" onclick="repondreNon()">Non merci</button>
+    </div>
+
+    <!-- Formulaire inscription -->
+    <div class="form" id="form">
+      <div class="form-title">🎁 50 points offerts au lancement !<br><small style="font-weight:500;color:#6B7280">Inscris-toi en 2 secondes</small></div>
+      <input class="input" id="prenom" type="text" placeholder="Ton prénom" autocomplete="given-name"/>
+      <input class="input" id="email" type="email" placeholder="Ton email étudiant" autocomplete="email"/>
+      <div class="error" id="error"></div>
+      <button class="btn-submit" id="btn-submit" onclick="inscrire()">Je m'inscris — c'est gratuit 🚀</button>
+    </div>
+
+    <!-- Succès inscription -->
+    <div class="success" id="success">
+      <div class="success-icon">🎉</div>
+      <div class="success-title">Tu es inscrit·e !</div>
+      <div class="success-pts">+50 points ⭐ t'attendent</div>
+      <div class="success-sub">Dès le 1er juillet, connecte-toi sur StuDiscount avec cet email et tes points seront là.<br><br>On te prévient au lancement !</div>
+    </div>
+
+    <!-- Merci non -->
+    <div class="thankyou" id="thankyou">
+      <div class="thankyou-icon">👋</div>
+      <div class="thankyou-text">Pas de problème !<br>Si tu changes d'avis, reviens ici pour t'inscrire.</div>
+    </div>
+  </div>
+
+  <div class="footer">StuDiscount © 2026 — L'appli des bons plans étudiants</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+const SUPABASE_URL = "https://ghwozyzlhcmuhneumasv.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdod296eXpsaGNtdWhuZXVtYXN2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzgyNjUsImV4cCI6MjA5NTExNDI2NX0.S5746-2ilKhwRApSk-q0ZAMSsX6STx_-Bc6CVLKPdAM";
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Enregistrer le scan au chargement
+(async function(){
+  try{
+    await db.from("scans_landing").insert({reponse:"scan"});
+  }catch(e){}
+})();
+
+function showForm(){
+  // Enregistrer "oui"
+  db.from("scans_landing").insert({reponse:"oui"}).then(()=>{});
+  document.getElementById("question").style.display="none";
+  document.getElementById("form").classList.add("visible");
+  document.getElementById("prenom").focus();
+}
+
+async function repondreNon(){
+  try{
+    await db.from("scans_landing").insert({reponse:"non"});
+  }catch(e){}
+  document.getElementById("question").style.display="none";
+  document.getElementById("thankyou").classList.add("visible");
+}
+
+async function inscrire(){
+  const prenom = document.getElementById("prenom").value.trim();
+  const email  = document.getElementById("email").value.trim().toLowerCase();
+  const errEl  = document.getElementById("error");
+  const btn    = document.getElementById("btn-submit");
+
+  errEl.classList.remove("visible");
+
+  if(!prenom){ errEl.textContent="Merci d'entrer ton prénom."; errEl.classList.add("visible"); return; }
+  if(!email||!email.includes("@")){ errEl.textContent="Merci d'entrer un email valide."; errEl.classList.add("visible"); return; }
+
+  btn.disabled=true;
+  btn.textContent="Inscription en cours…";
+
+  try{
+    // Vérifier si email déjà inscrit
+    const {data:existing} = await db.from("etudiants").select("id,prenom").eq("email",email).maybeSingle();
+    let etudiantId = null;
+
+    if(existing){
+      etudiantId = existing.id;
+      // Déjà inscrit — juste confirmer
+    } else {
+      // Créer le pré-inscrit
+      const {data:newEt, error} = await db.from("etudiants").insert({
+        prenom: prenom,
+        email: email,
+        points: 50,
+        pre_inscrit: true,
+        created_at: new Date().toISOString()
+      }).select("id").single();
+
+      if(error) throw error;
+      etudiantId = newEt?.id;
+    }
+
+    // Enregistrer le scan lié à l'étudiant
+    await db.from("scans_landing").insert({reponse:"inscrit", etudiant_id: etudiantId});
+
+    // Afficher succès
+    document.getElementById("form").classList.remove("visible");
+    document.getElementById("success").classList.add("visible");
+
+  } catch(e){
+    if(e.code==="23505"){
+      // Email déjà utilisé
+      errEl.textContent="Cet email est déjà inscrit 😊 On se retrouve le 1er juillet !";
+    } else {
+      errEl.textContent="Une erreur s'est produite. Réessaie dans un instant.";
+    }
+    errEl.classList.add("visible");
+    btn.disabled=false;
+    btn.textContent="Je m'inscris — c'est gratuit 🚀";
+  }
+}
+
+// Enter pour soumettre
+document.addEventListener("keydown", function(e){
+  if(e.key==="Enter") inscrire();
+});
+</script>
+</body>
+</html>
